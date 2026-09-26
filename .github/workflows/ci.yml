@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Testler (Python ${{ matrix.python-version }}, ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - name: Bağımlılıkları kur
+        run: pip install -r requirements-dev.txt
+      - name: Kod denetimi (ruff)
+        run: ruff check .
+      - name: Birim testleri
+        run: python -m unittest discover -s testler -v
+
+  veri-korumasi:
+    name: Kişisel veri kontrolü
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Veritabanı / çıktı dosyası repoya eklenmemiş olmalı
+        run: |
+          bulunan=$(git ls-files | grep -Ei '\.(db|db-wal|db-shm|sqlite3?|log|xlsx|xlsm|xls|pdf)$|^(veritabani_yedekleri|OUTPUT|SOURCE|TARGET)/' || true)
+          if [ -n "$bulunan" ]; then
+            echo "::error::Kişisel veri içerebilecek dosyalar repoda:"; echo "$bulunan"; exit 1
+          fi
+          echo "Temiz."
