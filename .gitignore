@@ -1,0 +1,54 @@
+# ---------------------------------------------------------------------------
+# KİŞİSEL VERİ — ASLA REPOYA EKLENMEZ (TC kimlik no, puantaj, İK bilgileri)
+# ---------------------------------------------------------------------------
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite
+*.sqlite3
+veritabani_yedekleri/
+OUTPUT/
+SOURCE/
+TARGET/
+*.log
+
+# Kullanıcıya özel ayar/geçmiş dosyaları
+veri_merkezi_ayarlar.json
+puantaj_settings.json
+team_report_settings.json
+team_report_history.json
+
+# Çalışırken indirilen çevrimdışı varlıklar ve PDF yazı tipleri
+yerel_varliklar/
+fonts/
+
+# Veri dosyaları (örnekler dışında)
+*.xlsx
+*.xlsm
+*.xls
+*.csv
+*.pdf
+!docs/**/*.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+build/
+dist/
+*.spec
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Editör / işletim sistemi
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+~$*

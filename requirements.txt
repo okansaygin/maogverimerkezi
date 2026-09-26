@@ -1,0 +1,10 @@
+# Veri Merkezi (Dash masaüstü uygulaması)
+dash>=2.18
+dash-bootstrap-components>=1.6
+plotly>=5.20
+pywebview>=5.0
+openpyxl>=3.1
+reportlab>=4.0
+
+# Puantaj & Raporlama Merkezi (puantaj_suite.py, isteğe bağlı)
+PySide6>=6.6
